@@ -18,20 +18,33 @@ public class TaskPool {
 	public void leftTaskGroup() {
 
 		if (rank == 0) {
-			int[] B = new int[N];
-			int[][] MK = new int[N][N];
-			int[][] MR = new int[N][N];
-			int[] alfa = new int[1];
-			alfa[0] = 1;
-			
-			int [][] MO = new int [N][N];
-			int [] E = new int [N];
-			
-			CalculateUtils.inputVector(B, 1);
-			CalculateUtils.inputMatrix(MK, 1);
-			CalculateUtils.inputMatrix(MR, 1);
 
+			Vector B, E, Z;
+			Matrix MK, MR, MO;
+			int alfa=1;
+		
 			
+			B = CalculateUtils.inputVector(1);
+			MR = CalculateUtils.inputMatrix(1);
+			MK = CalculateUtils.inputMatrix(1);
+			
+			MessageBox[] box = new MessageBox [1];
+			
+			MessageBox message = new MessageBox();
+			message.AddValue(alfa);
+			message.AddVector(B);
+			message.addMatrix(MK.copy(MK.size()/2, MK.size()/2));
+			message.addMatrix(MR.copy(MR.size()/2, MR.size()/2));
+			
+			box[0] = message;
+			MPI.COMM_WORLD.Send(box, 0, 1, MPI.OBJECT, k, 101);
+			
+			message.setMatrix(0,MK.copy(H,MR.size()/2-H));
+			message.setMatrix(1,MR.copy(H,MR.size()/2-H));
+			
+			MPI.COMM_WORLD.Send(box, 0, 1, MPI.OBJECT, rightRank, 105);
+			
+			/*
 			MPI.COMM_WORLD.Irsend(alfa, 0, 1, MPI.INT, k, 102);
 			MPI.COMM_WORLD.Irsend(alfa, 0, 1, MPI.INT, rightRank, 108);
 			
@@ -48,21 +61,34 @@ public class TaskPool {
 			MPI.COMM_WORLD.Barrier();
 			MPI.COMM_WORLD.Recv(MO, 0, N, MPI.OBJECT, rightRank, 115);
 		//	MPI.COMM_WORLD.Recv(E, 0, N, MPI.INT, rightRank, 116);
+		 * 
+		 */
 
 		}
 		if (rank == k) {
 			
 			int sizeResieve = k*H;
 			
-			int[] B = new int[N];
-			int[][] MK = new int[sizeResieve][N];
-			int[][] MR = new int[sizeResieve][N];
-			int[] alfa = new int[1];
-			alfa[0] = 1;
-		
-			int [][] MO = new int [N][N];
-			int [] E = new int [N];
+			Vector B, E, Z;
+			Matrix MK, MR, MO;
+			int alfa;
 			
+			MessageBox [] box = new MessageBox [1];
+			
+			MPI.COMM_WORLD.Recv(box, 0, 1, MPI.OBJECT, 0, 101);
+			B = box[0].getVector(0);
+			MK = box[0].getMatrix(0);
+			MR = box[0].getMatrix(1);
+			alfa = box[0].getValue(0);
+			
+			
+			box[0].setMatrix(0,MK.copy(H, MK.size()-H-1));
+			box[0].setMatrix(1,MR.copy(H, MR.size()-H-1));
+			
+			
+			MPI.COMM_WORLD.Send(box, 0, 1, MPI.OBJECT, rightRank, 105);
+			
+			/*
 			MPI.COMM_WORLD.Irecv(alfa, 0, 1, MPI.INT, 0, 102);
 			MPI.COMM_WORLD.Irsend(alfa, 0, 1, MPI.INT, rightRank, 108);
 
@@ -79,6 +105,8 @@ public class TaskPool {
 			MPI.COMM_WORLD.Barrier();
 			MPI.COMM_WORLD.Recv(MO, 0, N, MPI.OBJECT, rightRank, 115);
 			//MPI.COMM_WORLD.Recv(E, 0, N, MPI.INT, rightRank, 115);
+			 * 
+			 */
 			
 		}
 
@@ -98,16 +126,30 @@ public class TaskPool {
 				sizeRecv = (rank - k+1) * H;
 				sizeSend = (rank - k - 1) * H;
 			}
-
-			int[] B = new int[N];
-			int[][] MK = new int[sizeRecv][N];
-			int[][] MR = new int[sizeRecv][N];
-			int[] alfa = new int[1];
-			alfa[0] = 1;
-
-			int [][]MO = new int [N][N];
-			int [] E = new int [N];
+			Vector B, E, Z;
+			Matrix MK, MR, MO;
+			int alfa;
 			
+			
+			MessageBox [] box = new MessageBox [1];
+			
+			MPI.COMM_WORLD.Recv(box, 0, 1, MPI.OBJECT, leftRank, 105);
+			
+			B = box[0].getVector(0);
+			MK = box[0].getMatrix(0);
+			MR = box[0].getMatrix(1);
+			alfa = box[0].getValue(0);
+			
+		
+			box[0].setMatrix(0,MK.copy(H, MK.size()-H-1));
+			box[0].setMatrix(1,MR.copy(H, MR.size()-H-1));
+	
+			
+			
+			MPI.COMM_WORLD.Send(box, 0, 1, MPI.OBJECT, rightRank, 105);
+			
+			
+			/*
 			MPI.COMM_WORLD.Irecv(alfa, 0, 1, MPI.INT, leftRank, 108);
 			MPI.COMM_WORLD.Irsend(alfa, 0, 1, MPI.INT, rightRank, 108);
 			
@@ -127,6 +169,8 @@ public class TaskPool {
 			
 			MPI.COMM_WORLD.Send(MO, 0, N, MPI.OBJECT, leftRank, 115);
 			//MPI.COMM_WORLD.Send(E, 0, N, MPI.INT, leftRank, 116);
+			 * 
+			 */
 			
 			
 			
@@ -140,21 +184,33 @@ public class TaskPool {
 	public void rightTaskGroup() {
 		int sizeRecv = H;
 		if(rank == k-1){
-			int[] B = new int[N];
-			int[][] MK = new int[sizeRecv][N];
-			int[][] MR = new int[sizeRecv][N];
-			int[] alfa = new int[1];
-			alfa[0] = 1;
+			Vector B, E, Z;
+			Matrix MK, MR, MO;
+			int alfa;
 			
-			int [] Z = new int [N];
-			int [] E = new int [N];
-			int [][] MO = new int [N][N];
+			E = CalculateUtils.inputVector(1);
+			Z = CalculateUtils.inputVector(1);
+			MO = CalculateUtils.inputMatrix(1);
+			
+			MessageBox [] box = new MessageBox [1];
+			MessageBox message = new MessageBox();
+			message.addMatrix(MO);
+			message.AddVector(E);
+			message.AddVector(Z.copy(k*H, Z.size()/2));
+			box[0]=message;
+			MPI.COMM_WORLD.Send(box, 0, 1, MPI.OBJECT, P-1, 102);
 			
 			
-			CalculateUtils.inputVector(E, 1);
-			CalculateUtils.inputVector(Z, 1);
-			CalculateUtils.inputMatrix(MO, 1);
 			
+			box[0] = null;
+			MPI.COMM_WORLD.Recv(box, 0, 1, MPI.OBJECT, leftRank, 105);
+			
+			B = box[0].getVector(0);
+			MK = box[0].getMatrix(0);
+			MR = box[0].getMatrix(1);
+			alfa = box[0].getValue(0);
+			
+			/*
 			MPI.COMM_WORLD.Irsend(alfa, 0, 1, MPI.INT, leftRank, 108);
 			MPI.COMM_WORLD.Irecv(B, 0, N, MPI.INT, leftRank, 107);
 			MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
@@ -166,19 +222,30 @@ public class TaskPool {
 			MPI.COMM_WORLD.Send(MO, 0, N, MPI.OBJECT, leftRank, 115);
 			MPI.COMM_WORLD.Send(E, 0, N, MPI.INT, P-1, 111);
 			//MPI.COMM_WORLD.Send(E, 0, N, MPI.INT, leftRank, 116);
+			 */
 		}
 		
 		if (rank == P-1){
-			int[] B = new int[N];
-			int[][] MK = new int[sizeRecv][N];
-			int[][] MR = new int[sizeRecv][N];
-			int[] alfa = new int[1];
-			alfa[0] = 1;
-		
-			int [][] MO = new int [N][N];
-			int [] E = new int [N];
+			Vector B, E, Z;
+			Matrix MK, MR, MO;
+			int alfa;
 			
 			
+			MessageBox [] box = new MessageBox [1];
+			
+			MPI.COMM_WORLD.Recv(box, 0, 1, MPI.OBJECT, k-1, 102);
+			MO = box[0].getMatrix(0);
+			E = box[0].getVector(0);
+			Z = box[0].getVector(1);
+			box[0] = null;
+			MPI.COMM_WORLD.Recv(box, 0, 1, MPI.OBJECT, leftRank, 105);
+			
+			B = box[0].getVector(0);
+			MK = box[0].getMatrix(0);
+			MR = box[0].getMatrix(1);
+			alfa = box[0].getValue(0);
+			
+			/*
 			MPI.COMM_WORLD.Irsend(alfa, 0, 1, MPI.INT, leftRank, 108);
 			MPI.COMM_WORLD.Irecv(B, 0, N, MPI.INT, leftRank, 107);
 			MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
@@ -190,6 +257,8 @@ public class TaskPool {
 			
 			MPI.COMM_WORLD.Send(MO, 0, N, MPI.OBJECT, leftRank, 115);
 		//	MPI.COMM_WORLD.Send(E, 0, N, MPI.INT, leftRank, 116);
+		 * 
+		 */
 		
 		
 			
@@ -197,16 +266,5 @@ public class TaskPool {
 		}
 	}
 
-	public int[][] copy(final int[][] matrixFrom, int size) {
-		int l = matrixFrom.length - size;
-		int[][] result = new int[size][N];
-		for (int i = 0; i < result.length; i++) {
-			for (int j = 0; j < result[i].length; j++) {
-
-				result[i][j] = matrixFrom[i + l][j];
-			}
-		}
-		return result;
-	}
 
 }

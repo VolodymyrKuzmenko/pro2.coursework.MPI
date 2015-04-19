@@ -17,38 +17,36 @@
 public class CalculateUtils {
 
 	
- 	public static void inputVector(int [] vector,int value) {
-  		for(int i = 0; i < vector.length; i++) {
- 			vector[i] = value;
+	public static Vector inputVector(int value) {
+ 		Vector vector = new Vector(Executor.N); 
+  		for(int i = 0; i < vector.size(); i++) {
+ 			vector.set(i, value);
  		}
+ 		return vector;
  	}
  	
  	
- 	public static void inputMatrix(int [][] matrix,int value) {
- 		for(int i = 0; i < matrix.length; i++) {
- 			for(int j = 0; j < matrix[i].length; j++) {
- 				matrix[i][j] = value;	
+ 	public static Matrix inputMatrix(int value) {
+ 		Matrix matrix = new Matrix(Executor.N);
+ 		for(int i = 0; i < matrix.size(); i++) {
+ 			for(int j = 0; j < matrix.size(); j++) {
+ 				matrix.set(i, j, value);	
  			}
  		}
- 		
+ 		return matrix;
  	}
  	
  	
- 	public static void outputVector(int [] vector) {
- 		if(Executor.N <= 12) {
- 			for (int i = 0; i < vector.length; i++) {
-				System.out.print(vector[i]+" ");
-			}
+ 	public static void outputVector(Vector vector) {
+ 		if(vector.size() <= 12) {
+ 			System.out.print(vector.toString());
  		}
  	}
  	
  	
- 	public static void outputMatrix(int [][] matrix) {
- 		if(Executor.H <= 12) {
- 			for (int i = 0; i < matrix.length; i++) {
-				outputVector(matrix[i]);
-				System.out.println();
-			}
+ 	public static void outputMatrix(Matrix matrix) {
+ 		if(matrix.size() <= 12) {
+ 			System.out.print(matrix.toString());
  		}
  	}
  	

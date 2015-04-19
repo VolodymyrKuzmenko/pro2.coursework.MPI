@@ -21,7 +21,7 @@ public class Executor {
 
 	public static void task1() {
 		int[][] E0 = new int[N][N];
-		CalculateUtils.inputMatrix(E0, 1);
+		//CalculateUtils.inputMatrix(E0, 1);
 		MPI.COMM_WORLD.Send(E0, 0, N, MPI.OBJECT, 1, 99);
 	}
 
