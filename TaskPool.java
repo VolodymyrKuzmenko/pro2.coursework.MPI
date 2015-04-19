@@ -35,7 +35,7 @@ public class TaskPool {
 		//		rank + 1, 106);
 			System.out.println("Sent B from " + rank);
 			MPI.COMM_WORLD.Send(B, 0, N, MPI.INT, rank + 1, 107);
-		//	MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
+			MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
 
 		}
 		if (rank == k) {
@@ -59,7 +59,7 @@ public class TaskPool {
 		//			rank + 1, 106);
 			System.out.println("Sent B from " + rank);
 			MPI.COMM_WORLD.Send(B, 0, N, MPI.INT, rank + 1, 107);
-		//	MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
+			MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
 		}
 
 	}
@@ -90,7 +90,7 @@ public class TaskPool {
 			//MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 			System.out.println("Recive B in" + rank);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
-			//MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
+			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 
 			//MPI.COMM_WORLD.Send(copy(MR, sizeSend), 0, sizeSend, MPI.OBJECT,
 			//		rightRank, 105);
@@ -98,7 +98,7 @@ public class TaskPool {
 		//			rightRank, 106);
 			System.out.println("Sent B from " + rank);
 			MPI.COMM_WORLD.Send(B, 0, N, MPI.INT, rightRank, 107);
-		//	MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rightRank, 108);
+			MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rightRank, 108);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class TaskPool {
 			//MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 			System.out.println("Recive B in" + rank);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
-			//MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
+			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 
 		}
 		
@@ -133,7 +133,7 @@ public class TaskPool {
 		//	MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 			System.out.println("Recive B in" + rank);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
-		//	MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
+			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 		}
 	}
 
