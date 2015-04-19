@@ -34,6 +34,11 @@ public class TaskPool {
 			MPI.COMM_WORLD.Send(copy(MR, k * H - H), 0, k * H - H, MPI.OBJECT,
 					rank + 1, 105);
 			
+			MPI.COMM_WORLD.Send(copy(MK, k * H), 0, k * H, MPI.OBJECT, k, 103);		
+			MPI.COMM_WORLD.Send(copy(MK, k * H - H), 0, k * H - H, MPI.OBJECT,
+					rank + 1, 106);
+			
+			
 			
 
 		}
@@ -57,6 +62,10 @@ public class TaskPool {
 			MPI.COMM_WORLD.Recv(MR, 0, sizeResieve, MPI.OBJECT, 0, 104);
 			MPI.COMM_WORLD.Send(copy(MR, k * H - H), 0, k * H - H, MPI.OBJECT,
 					rank + 1, 105);
+			
+			MPI.COMM_WORLD.Recv(MK, 0, sizeResieve, MPI.OBJECT, 0, 103);
+			MPI.COMM_WORLD.Send(copy(MK, k * H - H), 0, k * H - H, MPI.OBJECT,
+					rank + 1, 106);
 			
 			
 		}
@@ -95,13 +104,10 @@ public class TaskPool {
 			MPI.COMM_WORLD.Send(copy(MR, sizeSend), 0, sizeSend, MPI.OBJECT,
 					rightRank, 105);
 	
-			System.out.println("rank: " +rank);
-			for (int i = 0; i < MR.length; i++) {
-				for (int j = 0; j < MR[i].length; j++) {
-					System.out.print(MR[i][j]+" ");
-				}
-				System.out.println();
-			}
+			MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
+			MPI.COMM_WORLD.Send(copy(MK, sizeSend), 0, sizeSend, MPI.OBJECT,
+					rightRank, 106);
+			
 		
 			
 		}
@@ -122,6 +128,7 @@ public class TaskPool {
 			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
 			MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
+			MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 
 		}
 		
@@ -135,6 +142,7 @@ public class TaskPool {
 			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
 			MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
+			MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 			
 		}
 	}
