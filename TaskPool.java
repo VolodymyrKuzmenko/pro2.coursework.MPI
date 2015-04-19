@@ -24,18 +24,18 @@ public class TaskPool {
 			CalculateUtils.inputMatrix(MR, 1);
 			
 			MPI.COMM_WORLD.Send(B, 0, N, MPI.INT, k, 101);
-			MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, k, 102);
-			MPI.COMM_WORLD.Send(copy(MK, k * H), 0, k * H, MPI.OBJECT, k, 103);
-			MPI.COMM_WORLD.Send(copy(MR, k * H), 0, k * H, MPI.OBJECT, k, 104);
+		//	MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, k, 102);
+		//	MPI.COMM_WORLD.Send(copy(MK, k * H), 0, k * H, MPI.OBJECT, k, 103);
+		//	MPI.COMM_WORLD.Send(copy(MR, k * H), 0, k * H, MPI.OBJECT, k, 104);
 			
 			
-			MPI.COMM_WORLD.Send(copy(MR, k * H - H), 0, k * H - H, MPI.OBJECT,
-					rank + 1, 105);
-			MPI.COMM_WORLD.Send(copy(MK, k * H - H), 0, k * H - H, MPI.OBJECT,
-				rank + 1, 106);
+		//	MPI.COMM_WORLD.Send(copy(MR, k * H - H), 0, k * H - H, MPI.OBJECT,
+		//			rank + 1, 105);
+		//	MPI.COMM_WORLD.Send(copy(MK, k * H - H), 0, k * H - H, MPI.OBJECT,
+		//		rank + 1, 106);
 			System.out.println("Sent B from " + rank);
 			MPI.COMM_WORLD.Send(B, 0, N, MPI.INT, rank + 1, 107);
-			MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
+		//	MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
 
 		}
 		if (rank == k) {
@@ -47,19 +47,19 @@ public class TaskPool {
 			int[][] MR = new int[sizeResieve][N];
 			int[] alfa = new int[1];
 			alfa[0] = 1;
-			
+			System.out.println("Reciv B from " + rank);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, 0, 101);
-			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, 0, 102);
-			MPI.COMM_WORLD.Recv(MK, 0, sizeResieve, MPI.OBJECT, 0, 103);
-			MPI.COMM_WORLD.Recv(MR, 0, sizeResieve, MPI.OBJECT, 0, 104);
+			//MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, 0, 102);
+		//	MPI.COMM_WORLD.Recv(MK, 0, sizeResieve, MPI.OBJECT, 0, 103);
+		//	MPI.COMM_WORLD.Recv(MR, 0, sizeResieve, MPI.OBJECT, 0, 104);
 
-			MPI.COMM_WORLD.Send(copy(MR, k * H - H), 0, k * H - H, MPI.OBJECT,
-					rank + 1, 105);
-			MPI.COMM_WORLD.Send(copy(MK, k * H - H), 0, k * H - H, MPI.OBJECT,
-					rank + 1, 106);
+			//MPI.COMM_WORLD.Send(copy(MR, k * H - H), 0, k * H - H, MPI.OBJECT,
+			//		rank + 1, 105);
+		//	MPI.COMM_WORLD.Send(copy(MK, k * H - H), 0, k * H - H, MPI.OBJECT,
+		//			rank + 1, 106);
 			System.out.println("Sent B from " + rank);
 			MPI.COMM_WORLD.Send(B, 0, N, MPI.INT, rank + 1, 107);
-			MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
+		//	MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rank + 1, 108);
 		}
 
 	}
@@ -86,19 +86,19 @@ public class TaskPool {
 			int[] alfa = new int[1];
 			alfa[0] = 1;
 
-			MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
-			MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
+			//MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
+			//MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 			System.out.println("Recive B in" + rank);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
-			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
+			//MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 
-			MPI.COMM_WORLD.Send(copy(MR, sizeSend), 0, sizeSend, MPI.OBJECT,
-					rightRank, 105);
-			MPI.COMM_WORLD.Send(copy(MK, sizeSend), 0, sizeSend, MPI.OBJECT,
-					rightRank, 106);
+			//MPI.COMM_WORLD.Send(copy(MR, sizeSend), 0, sizeSend, MPI.OBJECT,
+			//		rightRank, 105);
+		//	MPI.COMM_WORLD.Send(copy(MK, sizeSend), 0, sizeSend, MPI.OBJECT,
+		//			rightRank, 106);
 			System.out.println("Sent B from " + rank);
 			MPI.COMM_WORLD.Send(B, 0, N, MPI.INT, rightRank, 107);
-			MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rightRank, 108);
+		//	MPI.COMM_WORLD.Send(alfa, 0, 1, MPI.INT, rightRank, 108);
 		}
 	}
 
@@ -115,11 +115,11 @@ public class TaskPool {
 			alfa[0] = 1;
 			
 			
-			MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
-			MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
+			//MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
+			//MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 			System.out.println("Recive B in" + rank);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
-			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
+			//MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 
 		}
 		
@@ -129,11 +129,11 @@ public class TaskPool {
 			int[][] MR = new int[sizeRecv][N];
 			int[] alfa = new int[1];
 			alfa[0] = 1;
-			MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
-			MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
+			//MPI.COMM_WORLD.Recv(MR, 0, sizeRecv, MPI.OBJECT, leftRank, 105);
+		//	MPI.COMM_WORLD.Recv(MK, 0, sizeRecv, MPI.OBJECT, leftRank, 106);
 			System.out.println("Recive B in" + rank);
 			MPI.COMM_WORLD.Recv(B, 0, N, MPI.INT, leftRank, 107);
-			MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
+		//	MPI.COMM_WORLD.Recv(alfa, 0, 1, MPI.INT, leftRank, 108);
 		}
 	}
 
