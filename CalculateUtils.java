@@ -50,80 +50,71 @@ public class CalculateUtils {
  		}
  	}
  	
- /*	
- 	private static Matrix add(final Matrix left, final Matrix right,
- 			final int id) {
- 		int l = (id - 1) * Executor.H;
- 		int r = id * Executor.H;
- 		Matrix result = new Matrix(left.size());
- 		for(int i = l; i < r; i++) {
- 			for (int j = 0; j < left.size(); j++) {
- 				result.set(i,j, left.get(i,j) + right.get(i,j));
-			}
+ 
+ 	public static Vector add(final Vector left, final Vector right) {
+ 		
+ 		Vector result = new Vector(left.size());
+ 		for(int i = 0; i < left.size(); i++) {
+ 			result.set(i, left.get(i)+right.get(i));
  			
  		}
  		return result;
  	}
  	
  	
- 	private static Matrix mult(final int left, final Matrix right,
- 			final int id) {
- 		int l = (id - 1) * Executor.H;
- 		int r = id * Executor.H;
- 		Matrix result = new Matrix(right.size());
- 		for (int i = l; i < r; i++) {
- 			for (int j = 0; j < right.size(); j++) {
- 				result.set(i,j, left * right.get(i, j));
- 			}
+ 	public static Vector mult(final int left, final Vector right) {
+ 	
+ 		Vector result = new Vector(right.size());
+ 		for (int i = 0; i < right.size(); i++) {
+ 				result.set(i, left * right.get(i));
+ 			
  		}
  		
  		return result;
  	}
  	
- 	private static Matrix mult(final Matrix left, final Matrix right,
- 			final int id) {
- 		int l = (id - 1) * Executor.H;
- 		int r = id * Executor.H;
- 		Matrix result = new Matrix(left.size());
- 		for (int i = l; i < r; i++) {
- 			for (int j = 0; j < left.size(); j++) {
+ 	public static Matrix mult(final Matrix left, final Matrix right) {
+ 
+ 		
+ 		Matrix result = new Matrix(right.size());
+ 		result = result.copy(0, left.size());
+ 		
+ 		for (int i = 0; i < left.size(); i++) {
+ 			for (int j = 0; j < right.size(); j++) {
  				result.set(i, j, 0);
- 				for (int y = 0; y < left.size(); y++) {
+ 				for (int y = 0; y < right.size(); y++) {
  					result.set(i, j, result.get(i, j) + left.get(i, y)
  							* right.get(y, j));
  				}
  			}
  		}
- 		
- 		
  		return result;
  	}
- 	private static int mult(final Vector left, final Vector right, final int id){
- 		
- 		int l = (id - 1) * Executor.H;
- 		int r = id * Executor.H;
- 		int result =  0;
- 		for (int i = l; i < r; i++) {
-			result += left.get(i)*right.get(i);
-		}
+ 
+ 	public static Vector mult(final Vector left, final Matrix right) {
 
+ 	
+ 		
+
+ 		Vector result = new Vector(right.size());
+ 		for (int i = 0; i < right.size(); i++) {
+ 			result.set(i, 0);
+ 			for (int j = 0; j < left.size(); j++) {
+ 				result.set(i, result.get(i) + left.get(j) * right.get(i, j));
+ 			}
+ 		}
  		return result;
  	}
- 	
- 	public static void operation3(final int alfai, final int vi, final Matrix MRi, int tid ){
- 		Matrix MAi = CalculateUtils.add(mult(vi, Executor.MO, tid), mult(alfai, mult(MRi, Executor.MT, tid), tid), tid);
- 		int l = (tid - 1) * Executor.H;
- 		int r = tid * Executor.H;
- 		
- 		for (int i = l; i < r; i++) {
-			for (int j = 0; j < Executor.N; j++) {
-				Executor.MA.set(i, j, MAi.get(i, j));
+ 	public static int min(final Vector vector){
+ 		int min = Integer.MAX_VALUE;
+ 		for (int i = 0; i < vector.size(); i++) {
+			if(vector.get(i)<min){
+				min = vector.get(i);
 			}
 		}
+ 		return min;
  	}
- 	public static int operation1(int tid){
- 		return CalculateUtils.mult(Executor.B, Executor.C, tid);
- 	}
- 	*/
+ 	
+ 	
  	
 }

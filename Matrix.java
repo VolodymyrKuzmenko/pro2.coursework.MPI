@@ -53,10 +53,7 @@ public class Matrix implements Serializable {
 	public Matrix copy(int start,int size){
 		Matrix result = new Matrix(size);
 		for (int i = 0; i < result.size(); i++) {
-			result.array[i] = new Vector(Executor.N);
-			for (int j = 0; j < Executor.N; j++) {
-				result.array[i].set(j, this.array[i+size].get(j));
-			}
+			result.array[i] = array[i+start].copy(0, Executor.N);
 		}
 		return result;
 	}

@@ -51,5 +51,21 @@ public class Vector implements Serializable {
 		}
 		return result;
 	}
+	
+	public void merge(Vector vector){
+		int [] buf = array;
+		array = new int [buf.length+vector.size()];
+		System.arraycopy(buf, 0, array, 0,buf.length );
+		System.arraycopy(vector.array, 0, this.array, buf.length, vector.array.length);
+		
+	}
+	public void reverse(){
+		for (int i = 0; i < array.length/2; i++) {
+			int buf = array[i];
+			array[i] = array[i +array.length/2];
+			array[array.length/2+i] = buf;
+			
+		}
+	}
 
 }
