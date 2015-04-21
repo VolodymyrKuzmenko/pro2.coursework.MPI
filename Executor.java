@@ -1,7 +1,7 @@
 import mpi.*;
 
 public class Executor {
-	public static int N = 3000;
+	public static int N = 36;
 	public static int P;
 	public static int H;
 	public static int k;

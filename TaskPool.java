@@ -8,6 +8,7 @@ public class TaskPool {
 	private int rank;
 	int leftRank;
 	int rightRank;
+	
 
 	private Vector B, E, Z, A;
 	private Matrix MK, MR, MO;
@@ -76,10 +77,6 @@ public class TaskPool {
 			
 			calcMinButtonTask();
 
-			
-			
-			
-			
 			A = CalculateUtils.add(CalculateUtils.mult(alfa, CalculateUtils.mult(B, CalculateUtils.mult(MK, MO))), CalculateUtils.mult(localMin,CalculateUtils.mult(E, MR)));
 			
 			MPI.COMM_WORLD.Recv(box, 0, 1, MPI.OBJECT, rightRank, 111);
@@ -220,12 +217,10 @@ public class TaskPool {
 				if (rank!=(k-1)){
 					min = new int[1];
 					MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank+1, 104);
-		//			System.out.println("reciv "+rank);
 					localMin = Math.min(localMin, min[0]);
 					min[0] = localMin;
 				}
 				
-			//	System.out.println("send "+rank);
 				MPI.COMM_WORLD.Send(min, 0, 1, MPI.INT, rank - 1, 104);
 				
 				
@@ -261,20 +256,18 @@ public class TaskPool {
 				//çíàéøëè ì³í³ìóì
 				res[0] = localMin;
 				
-				
-			//	System.out.println("start send");
 				MPI.COMM_WORLD.Send(res, 0, 1, MPI.INT, rank - 1, 122);
 				MPI.COMM_WORLD.Send(res, 0, 1, MPI.INT, rank + 1, 122);
 			} 
 			
 			else if (rank > 0 && rank < (k - 1) / 2) {
 				min = new int[1];
-			//	System.out.println("startRe l"+rank);
+			
 				MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank + 1, 122);
 				localMin = min[0];
 				MPI.COMM_WORLD.Send(min, 0, 1, MPI.INT, rank - 1, 122);
 			} else if (rank != 0 && rank != k - 1) {
-			//	System.out.println("startRes"+rank);
+			
 				min = new int[1];
 				MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank - 1, 122);
 				localMin = min[0];
@@ -283,13 +276,12 @@ public class TaskPool {
 				min = new int[1];
 				MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank + 1, 122);
 				localMin = min[0];
-				//System.out.println("sdd  0");
 
 			} else {
 				min = new int[1];
 				MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank - 1, 122);
 				localMin = min[0];
-				//System.out.println("k-1");
+				
 
 			}
 			min[0] = localMin;
