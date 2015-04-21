@@ -8,8 +8,11 @@ public class TaskPool {
 	private int rank;
 	int leftRank;
 	int rightRank;
+	int minRank = (k-1)/2;
+	int endFirsRowRank = k-1;
 	
-
+	boolean isFourCore = false;
+	
 	private Vector B, E, Z, A;
 	private Matrix MK, MR, MO;
 	private int alfa;
@@ -23,6 +26,14 @@ public class TaskPool {
 		rank = MPI.COMM_WORLD.Rank();
 		rightRank = rank + 1;
 		leftRank = rank - 1;
+		 
+		if (P==4){
+			minRank = 1;
+			endFirsRowRank = 1;
+			isFourCore = true;
+		}
+		
+		
 	}
 
 	public void leftTaskGroup() {
@@ -98,7 +109,7 @@ public class TaskPool {
 	}
 
 	public void middleTaskGroup() {
-		if (rank != 0 && rank != k && rank != k - 1 && rank != P - 1) {
+		if (rank != 0 && rank != k && rank != endFirsRowRank && rank != P - 1) {
 
 			MPI.COMM_WORLD.Recv(box, 0, 1, MPI.OBJECT, leftRank, 105);
 
@@ -140,7 +151,7 @@ public class TaskPool {
 
 	public void rightTaskGroup() {
 
-		if (rank == k - 1 || rank == P - 1) {
+		if (rank == endFirsRowRank || rank == P - 1) {
 
 			if (rank == k - 1) {
 
@@ -198,7 +209,8 @@ public class TaskPool {
 
 	private void calcMinButtonTask() {
 		
-		if (rank > k-1) {
+		if (rank > endFirsRowRank) {
+			//íèæí³é ğÿäîê
 			int min[] = new int[] { CalculateUtils.min(Z) };
 
 			MPI.COMM_WORLD.Send(min, 0, 1, MPI.INT, rank - k, 103);
@@ -212,9 +224,9 @@ public class TaskPool {
 			
 			min[0] = Math.min(min[0], CalculateUtils.min(Z));
 			localMin = min[0];
-			if (rank > (k - 1) / 2) {
+			if (rank > minRank) {
 				
-				if (rank!=(k-1)){
+				if (rank!=endFirsRowRank){
 					min = new int[1];
 					MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank+1, 104);
 					localMin = Math.min(localMin, min[0]);
@@ -229,7 +241,7 @@ public class TaskPool {
 
 			} 
 			else {
-				if(rank !=(k-1)/2){
+				if(rank !=minRank){
 					
 				if(rank!=0){
 					
@@ -244,29 +256,32 @@ public class TaskPool {
 
 			}
 			
-			if (rank == (k - 1) / 2) {
+			if (rank == minRank) {
 				
 			
 				int res[] = new int[1];
-				MPI.COMM_WORLD.Recv(res, 0, 1, MPI.INT, rank + 1, 104);
-				localMin = Math.min(localMin, res[0]);
-				res = new int[1];
-				MPI.COMM_WORLD.Recv(res, 0, 1, MPI.INT, rank - 1, 104);
+				if (!isFourCore) {
+					MPI.COMM_WORLD.Recv(res, 0, 1, MPI.INT, rank + 1, 104);
+					localMin = Math.min(localMin, res[0]);
+					res = new int[1];
+				}
+				MPI.COMM_WORLD.Recv(res, 0, 1, MPI.INT, rank - 1, 104);					
 				localMin = Math.min(localMin, res[0]);
 				//çíàéøëè ì³í³ìóì
 				res[0] = localMin;
 				
 				MPI.COMM_WORLD.Send(res, 0, 1, MPI.INT, rank - 1, 122);
+				if (!isFourCore)
 				MPI.COMM_WORLD.Send(res, 0, 1, MPI.INT, rank + 1, 122);
 			} 
 			
-			else if (rank > 0 && rank < (k - 1) / 2) {
+			else if (rank > 0 && rank < minRank) {
 				min = new int[1];
 			
 				MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank + 1, 122);
 				localMin = min[0];
 				MPI.COMM_WORLD.Send(min, 0, 1, MPI.INT, rank - 1, 122);
-			} else if (rank != 0 && rank != k - 1) {
+			} else if (rank != 0 && rank != endFirsRowRank) {
 			
 				min = new int[1];
 				MPI.COMM_WORLD.Recv(min, 0, 1, MPI.INT, rank - 1, 122);

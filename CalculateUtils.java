@@ -38,14 +38,14 @@ public class CalculateUtils {
  	
  	
  	public static void outputVector(Vector vector) {
- 		if(vector.size() <= 12) {
+ 		if(vector.size() <= 40) {
  			System.out.print(vector.toString());
  		}
  	}
  	
  	
  	public static void outputMatrix(Matrix matrix) {
- 		if(matrix.size() <= 12) {
+ 		if(matrix.size() <= 40) {
  			System.out.print(matrix.toString());
  		}
  	}
