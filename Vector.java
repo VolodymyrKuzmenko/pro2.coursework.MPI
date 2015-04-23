@@ -1,21 +1,26 @@
+
 import java.io.Serializable;
 
-
 /**
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *                                                                           *
- *                 Laboratory work #6. Java. Monitors                        *
- *                                                                           *
- * Task: MA = (B*C)*MO + О±*(MT*MR)                                           *
- *                                                                           *
- * @file Vector.java 						             *
- * @author Kuzmenko Volodymyr					             *
- * @group IO-21								     *
- * @date 17.04.2015                                                          *
- *                                                                           *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- */
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ***********************
+*                                                             
+*            Програмування паралельний комп'ютерних сисем     
+*             Курсова робота. ПРГ2. Бібліотека MPI         
+*                                                             
+* Завдання: A = B(MO*MK)*a + min(Z)*E*MR                      
+*    
+* Файл Vector.java                                                  
+* Автор Кузьменко Володимир                                   
+* Група ІО-21                                                 
+* Датаe 23.04.15                                              
+*                                                             
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ************************
+*/
 public class Vector implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int[] array;
 	
 

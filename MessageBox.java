@@ -1,8 +1,26 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ***********************
+*                                                             
+*            Програмування паралельний комп'ютерних сисем     
+*             Курсова робота. ПРГ2. Бібліотека MPI         
+*                                                             
+* Завдання: A = B(MO*MK)*a + min(Z)*E*MR                      
+*    
+* Файл MessageBox.java                                                       
+* Автор Кузьменко Володимир                                   
+* Група ІО-21                                                 
+* Датаe 23.04.15                                              
+*                                                             
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ************************
+*/
 
 public class MessageBox implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Matrix> matrixs = new ArrayList<Matrix>(3);
 	private ArrayList<Vector> vectors = new ArrayList<Vector>(3);
 	private ArrayList<Integer> values = new ArrayList<>(2);
