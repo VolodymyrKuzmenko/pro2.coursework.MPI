@@ -3,19 +3,18 @@ import java.util.ArrayList;
 /**
 *****************************************************************
 *                                                               *
-*            Програмування паралельний комп'ютерних систем      *     
-*             Курсова робота. ПРГ2. Бібліотека MPI              *
+*            РџСЂРѕРіСЂР°РјСѓРІР°РЅРЅСЏ РїР°СЂР°Р»РµР»СЊРЅРёР№ РєРѕРјРї'СЋС‚РµСЂРЅРёС… СЃРёСЃС‚РµРј      *     
+*             РљСѓСЂСЃРѕРІР° СЂРѕР±РѕС‚Р°. РџР Р“2. Р‘С–Р±Р»С–РѕС‚РµРєР° MPI              *
 *                                                               *
-* Завдання: A = B(MO*MK)*a + min(Z)*E*MR                        *
+* Р—Р°РІРґР°РЅРЅСЏ: A = B(MO*MK)*a + min(Z)*E*MR                        *
 *                                                               *  
-* Файл: MessageBox.java                                         *            
-* Автор: Кузьменко Володимир                                    *
-* Група: ІО-21                                                  *
-* Дата: 23.04.15                                                *
+* Р¤Р°Р№Р»: MessageBox.java                                         *            
+* РђРІС‚РѕСЂ: РљСѓР·СЊРјРµРЅРєРѕ Р’РѕР»РѕРґРёРјРёСЂ                                    *
+* Р“СЂСѓРїР°: Р†Рћ-21                                                  *
+* Р”Р°С‚Р°: 23.04.15                                                *
 *                                                               *
 *****************************************************************
 */
-
 public class MessageBox implements Serializable {
 	/**
 	 * 
@@ -24,40 +23,41 @@ public class MessageBox implements Serializable {
 	private ArrayList<Matrix> matrixs = new ArrayList<Matrix>(3);
 	private ArrayList<Vector> vectors = new ArrayList<Vector>(3);
 	private ArrayList<Integer> values = new ArrayList<>(2);
-	
-	public void addMatrix(Matrix matrix){
+
+	public void addMatrix(Matrix matrix) {
 		matrixs.add(matrix);
-		
+
 	}
-	
-	public Matrix setMatrix(int key, Matrix matrix){
+
+	public Matrix setMatrix(int key, Matrix matrix) {
 		return matrixs.set(key, matrix);
 	}
-	
-	public void AddVector(Vector vector){
+
+	public void AddVector(Vector vector) {
 		vectors.add(vector);
 	}
-	
-	public Vector setVector(int key, Vector vector){
+
+	public Vector setVector(int key, Vector vector) {
 		return vectors.set(key, vector);
 	}
-	
-	public void AddValue(int value){
+
+	public void AddValue(int value) {
 		values.add(value);
 	}
-	
-	public int setValue(int key, int value){
+
+	public int setValue(int key, int value) {
 		return values.set(key, value);
 	}
-	
-	public Matrix getMatrix(int key){
+
+	public Matrix getMatrix(int key) {
 		return matrixs.get(key);
 	}
-	public Vector getVector(int key){
+
+	public Vector getVector(int key) {
 		return vectors.get(key);
 	}
-	
-	public int getValue(int key){
+
+	public int getValue(int key) {
 		return values.get(key);
 	}
 }

@@ -1,21 +1,22 @@
 import java.io.Serializable;
+
 /**
 *****************************************************************
 *                                                               *
-*            Програмування паралельний комп'ютерних систем      *     
-*             Курсова робота. ПРГ2. Бібліотека MPI              *
+*            РџСЂРѕРіСЂР°РјСѓРІР°РЅРЅСЏ РїР°СЂР°Р»РµР»СЊРЅРёР№ РєРѕРјРї'СЋС‚РµСЂРЅРёС… СЃРёСЃС‚РµРј      *     
+*             РљСѓСЂСЃРѕРІР° СЂРѕР±РѕС‚Р°. РџР Р“2. Р‘С–Р±Р»С–РѕС‚РµРєР° MPI              *
 *                                                               *
-* Завдання: A = B(MO*MK)*a + min(Z)*E*MR                        *
+* Р—Р°РІРґР°РЅРЅСЏ: A = B(MO*MK)*a + min(Z)*E*MR                        *
 *                                                               *  
-* Файл: Matrix.java                                             *            
-* Автор: Кузьменко Володимир                                    *
-* Група: ІО-21                                                  *
-* Дата: 23.04.15                                                *
+* Р¤Р°Р№Р»: Matrix.java                                             *            
+* РђРІС‚РѕСЂ: РљСѓР·СЊРјРµРЅРєРѕ Р’РѕР»РѕРґРёРјРёСЂ                                    *
+* Р“СЂСѓРїР°: Р†Рћ-21                                                  *
+* Р”Р°С‚Р°: 23.04.15                                                *
 *                                                               *
 *****************************************************************
 */
 public class Matrix implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -24,7 +25,7 @@ public class Matrix implements Serializable {
 
 	public Matrix(int n) {
 		array = new Vector[n];
-		for (int i = 0; i < array.length; i++){
+		for (int i = 0; i < array.length; i++) {
 			array[i] = new Vector(n);
 		}
 	}
@@ -32,7 +33,7 @@ public class Matrix implements Serializable {
 	public void set(int n, int m, int val) {
 		array[n].set(m, val);
 	}
-	
+
 	public int get(int n, int m) {
 		return array[n].get(m);
 	}
@@ -40,23 +41,23 @@ public class Matrix implements Serializable {
 	public Vector get(int index) {
 		return array[index];
 	}
-	
+
 	public int size() {
 		return array.length;
 	}
-	
+
 	public String toString() {
 		String res = "";
-		for (int i = 0; i < array.length; i++){
+		for (int i = 0; i < array.length; i++) {
 			res += array[i].toString();
 		}
 		return res;
 	}
-	
-	public Matrix copy(int start,int size){
+
+	public Matrix copy(int start, int size) {
 		Matrix result = new Matrix(size);
 		for (int i = 0; i < result.size(); i++) {
-			result.array[i] = array[i+start].copy(0, Executor.N);
+			result.array[i] = array[i + start].copy(0, Executor.N);
 		}
 		return result;
 	}
