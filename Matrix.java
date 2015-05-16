@@ -7,7 +7,7 @@ import java.io.Serializable;
 *                                                               *
 * Завдання: A = B(MO*MK)*a + min(Z)*E*MR                        *
 *                                                               *  
-* Файл: Matrix.java                                     *            
+* Файл: Matrix.java                                             *            
 * Автор: Кузьменко Володимир                                    *
 * Група: ІО-21                                                  *
 * Дата: 23.04.15                                                *

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 *                                                               *
 * Завдання: A = B(MO*MK)*a + min(Z)*E*MR                        *
 *                                                               *  
-* Файл: MessageBox.java                                     *            
+* Файл: MessageBox.java                                         *            
 * Автор: Кузьменко Володимир                                    *
 * Група: ІО-21                                                  *
 * Дата: 23.04.15                                                *
